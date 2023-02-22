@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {InputModel} from "./models/input-model";
 import {ConfigModel} from "./models/config-model";
 
@@ -11,9 +11,9 @@ export class FormGenerationComponent<T> implements OnInit {
 
   constructor() { }
 
-  @Input() inputs : Array<InputModel<T>> | undefined ;
-  @Input() config: ConfigModel<T> | undefined ;
-  @Input() Data: Array<T> | undefined ;
+  @Input() inputs? : Array<InputModel<T>>;
+  @Input() config?: ConfigModel<T>;
+  @Input() data?: Array<T>;
 
   ngOnInit(): void {
 

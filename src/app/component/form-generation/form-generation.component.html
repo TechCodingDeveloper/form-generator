@@ -1,7 +1,21 @@
-<div>
-  <form >
-     <ng-template *NgFor="let item of inputs">
-         <input type="text"  />
-     </ng-template>
+<div class="main">
+  <form *ngIf="inputs" class="grid" >
+     <div *ngFor="let item of inputs" class="grid__item">
+
+       <div class="form__group field" *ngIf="item.Format == 0">
+         <input type="text" class="form__field" placeholder="Name" name="Name" id='name' />
+         <label for="name" class="form__label">{{item.Title}}</label>
+       </div>
+
+       <div class="form__group field__checkbox" *ngIf="item.Format == 5">
+         <input type="checkbox"  placeholder="Name" name="Name" id='name' />
+         <label for="name" >{{item.Title}}</label>
+       </div>
+
+       <div class="form__group field__radio" *ngIf="item.Format == 6">
+         <input type="radio"  placeholder="Name" name="Name" id='name' />
+         <label for="name" >{{item.Title}}</label>
+       </div>
+     </div>
   </form>
 </div>

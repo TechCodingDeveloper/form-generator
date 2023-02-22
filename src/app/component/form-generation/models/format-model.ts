@@ -5,5 +5,5 @@ export enum FormatType {
   Email,
   Date,
   CheckBox,
-  Redio
+  Radio
 }

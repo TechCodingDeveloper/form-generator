@@ -34,8 +34,10 @@ export class AppComponent {
     this.Inputs.push(
       {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: FormatType.Text,Required:true } as InputModel<CustomerForm>,
       {Name:x=>x.LastName,Title:"Last Name",Description:"Please set last name",Format: FormatType.Text,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.PhoneNumber,Title:"First Name",Description:"Please set first name",Format: FormatType.PhoneNumber,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.Email,Title:"First Name",Description:"Please set first name",Format: FormatType.Email,Required:true } as InputModel<CustomerForm>,
+      {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: FormatType.CheckBox,Required:true } as InputModel<CustomerForm>,
+      {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: FormatType.Radio,Required:true } as InputModel<CustomerForm>,
+      {Name:x=>x.PhoneNumber,Title:"Phone Number",Description:"Please set first name",Format: FormatType.PhoneNumber,Required:true } as InputModel<CustomerForm>,
+      {Name:x=>x.Email,Title:"Email",Description:"Please set first name",Format: FormatType.Email,Required:true } as InputModel<CustomerForm>,
       {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: FormatType.Date,Required:true } as InputModel<CustomerForm>,
     );
 
