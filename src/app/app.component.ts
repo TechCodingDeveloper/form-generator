@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {InputModel} from "./component/form-generation/models/input-model";
 import {FormatType} from "./component/form-generation/models/format-model";
 import {ConfigModel} from "./component/form-generation/models/config-model";
+import {Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -32,13 +33,12 @@ export class AppComponent {
     this.Inputs = new Array<InputModel<CustomerForm>>();
 
     this.Inputs.push(
-      {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: FormatType.Text,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.LastName,Title:"Last Name",Description:"Please set last name",Format: FormatType.Text,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: FormatType.CheckBox,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: FormatType.Radio,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.PhoneNumber,Title:"Phone Number",Description:"Please set first name",Format: FormatType.PhoneNumber,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.Email,Title:"Email",Description:"Please set first name",Format: FormatType.Email,Required:true } as InputModel<CustomerForm>,
-      {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: FormatType.Date,Required:true } as InputModel<CustomerForm>,
+      {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: FormatType.Text,Validations: [Validators.required,Validators.min(12)]  } as InputModel<CustomerForm>,
+      {Name:x=>x.LastName,Title:"Last Name",Description:"Please set last name",Format: FormatType.Text } as InputModel<CustomerForm>,
+      {Name:x=>x.IsSingle,Title:"First Name",Description:"Please set first name",Format: FormatType.CheckBox } as InputModel<CustomerForm>,
+      {Name:x=>x.PhoneNumber,Title:"Phone Number",Description:"Please set first name",Format: FormatType.PhoneNumber } as InputModel<CustomerForm>,
+      {Name:x=>x.Email,Title:"Email",Description:"Please set first name",Format: FormatType.Email} as InputModel<CustomerForm>,
+      {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: FormatType.Date } as InputModel<CustomerForm>,
     );
 
   }
@@ -51,5 +51,6 @@ export class CustomerForm {
   BirthDay?: Date;
   PhoneNumber?: string;
   Email?: string;
+  IsSingle?:boolean=false;
 }
 
