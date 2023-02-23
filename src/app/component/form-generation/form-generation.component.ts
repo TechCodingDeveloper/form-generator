@@ -14,7 +14,6 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
   }
 
   @Input() inputs?: Array<InputModel<T>>;
@@ -26,7 +25,6 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
   formGroup: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
-
     this.extentInputs = this.inputs as Array<InputExtendModel<T>>;
     this.extentInputs?.forEach(input => {
       if (input) {
@@ -37,11 +35,22 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
         input.FormControl = form;
       }
     });
-
     this.formGroup.valueChanges.subscribe(res => {
       debugger;
     });
+  }
 
+  ShowErrors(form: FormControl) {
+    if (form.errors) {
+      let k='';
+      Object.keys(form.errors).forEach(key=>{
+        k = `<span>${key}</span>`
+      })
+
+      return k;
+    }else{
+      return  null;
+    }
   }
 
 

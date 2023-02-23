@@ -1,5 +1,5 @@
 import {FormatType} from "./format-model";
-import {FormControl, ValidatorFn} from "@angular/forms";
+import {AsyncValidatorFn, FormControl, FormControlOptions, ValidatorFn} from "@angular/forms";
 
 
 export class InputModel<T> {
@@ -7,7 +7,7 @@ export class InputModel<T> {
   Title?: string;
   InputType: any;
   Description?: string;
-  Validations?: ValidatorFn[];
+  Validations?: ValidatorFn | ValidatorFn[] | FormControlOptions | null;
   Format?: FormatType;
   AccessLevel: any;
   Priority?: number;
