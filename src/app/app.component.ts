@@ -32,7 +32,7 @@ export class AppComponent {
 
     this.Inputs = new Array<InputModel<CustomerForm>>();
 
-    this.Inputs.push(
+    this.Inputs=[
       {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",InputType: InputType.Text,Validations: [Validators.required,Validators.minLength(10)]  } as InputModel<CustomerForm>,
       {Name:x=>x.LastName,Title:"Last Name",Description:"Please set last name",InputType: InputType.Text } as InputModel<CustomerForm>,
       {Name:x=>x.IsSingle,Title:"First Name",Description:"Please set first name",InputType: InputType.CheckBox } as InputModel<CustomerForm>,
@@ -60,7 +60,7 @@ export class AppComponent {
         }
       } as InputModel<CustomerForm>,
 
-    );
+    ];
 
   }
 }
