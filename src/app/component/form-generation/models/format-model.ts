@@ -7,5 +7,6 @@ export enum InputType {
   CheckBox,
   Radio,
   List,
-  DatePeriod=8
+  DatePeriod=8,
+  Button=9
 }

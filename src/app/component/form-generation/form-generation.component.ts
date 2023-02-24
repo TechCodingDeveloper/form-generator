@@ -1,8 +1,9 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {InputExtendModel, InputModel} from "./models/input-model";
+import {InputExtendModel, InputModel, MessageContract, MessageErrorContract} from "./models/input-model";
 import {ConfigModel} from "./models/config-model";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {NgbCalendar, NgbDate, NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
+import {InputType} from "./models/format-model";
 
 @Component({
   selector: 'app-form-generation',
@@ -16,9 +17,15 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
   }
 
+  //Inputs
   @Input() inputs?: Array<InputModel<T>>;
   @Input() config?: ConfigModel<T>;
   @Input() data?: Array<T>;
+
+  //Public Variable
+  hoveredDate: NgbDate | null = null;
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
 
   constructor(private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
     this.fromDate = calendar.getToday();
@@ -27,11 +34,17 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
 
 
   extentInputs?: Array<InputExtendModel<T>>;
+  extentButton?: Array<InputExtendModel<T>>;
 
   formGroup: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     this.extentInputs = this.inputs as Array<InputExtendModel<T>>;
+
+    this.extentButton = this.extentInputs.filter(dr=>dr.InputType== InputType.Button) ;
+
+    this.extentInputs = this.extentInputs.filter(dr=>dr.InputType!= InputType.Button);
+
     this.extentInputs?.forEach(input => {
       if (input) {
         let inputName = input.Name?.toString().split('.')[input.Name?.toString().split('.').length - 1] as string;
@@ -48,7 +61,29 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
 
   }
 
-  ShowErrors(form: FormControl) : string|null {
+  OnClick(item:InputExtendModel<T>) {
+    let data:T =this.formGroup.value as T;
+    let message:MessageContract<T> =new MessageContract<T>();
+    message.Data = data;
+    if(this.formGroup.invalid) {
+      message.Error = new MessageErrorContract();
+      message.Error.Message = this.formGroup.status;
+    }
+    item.onClick?.(message);
+  }
+
+  OnLoad(item:InputExtendModel<T>) {
+    let data:T =this.formGroup.value as T;
+    let message:MessageContract<T> =new MessageContract<T>();
+    message.Data = data;
+    if(this.formGroup.invalid) {
+      message.Error = new MessageErrorContract();
+      message.Error.Message = this.formGroup.status;
+    }
+    item.onLoad?.(message);
+  }
+
+  showErrors(form: FormControl) : string|null {
     if (form.errors && (form.dirty || form.touched)) {
       let list:Array<string>=new Array<string>();
       Object.keys(form.errors).forEach(key=>{
@@ -59,13 +94,6 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
       return  null;
     }
   }
-
-  hoveredDate: NgbDate | null = null;
-
-  fromDate: NgbDate | null;
-  toDate: NgbDate | null;
-
-
 
   // Select Multi DateTime
   onDateSelection(date: NgbDate,element:any) {
