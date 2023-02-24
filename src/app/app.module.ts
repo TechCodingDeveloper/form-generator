@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormGenerationComponent } from './component/form-generation/form-generation.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
     imports: [
         BrowserModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+       NgbDatepickerModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,7 +4,62 @@
   height: 500px;
 }
 
+::ng-deep .error-input {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+
 .description {
  font-size: 12px;
   margin-left: 10px;
+}
+
+.dp-hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range,
+.custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+
+.DatePriod{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  cursor: text;
+  margin-top: 10px;
+
+  & input {
+    padding: 5px;
+    background-image:none;
+    background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none;
+    width: 100px;
+  }
+
 }
