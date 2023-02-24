@@ -33,7 +33,6 @@ export class AppComponent {
     this.Inputs = new Array<InputModel<CustomerForm>>();
 
     this.Inputs.push(
-      {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: InputType.DatePeriod } as InputModel<CustomerForm>,
       {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",Format: InputType.Text,Validations: [Validators.required,Validators.minLength(10)]  } as InputModel<CustomerForm>,
       {Name:x=>x.LastName,Title:"Last Name",Description:"Please set last name",Format: InputType.Text } as InputModel<CustomerForm>,
       {Name:x=>x.IsSingle,Title:"First Name",Description:"Please set first name",Format: InputType.CheckBox } as InputModel<CustomerForm>,
@@ -41,6 +40,14 @@ export class AppComponent {
       {Name:x=>x.Email,Title:"Email",Description:"Please set first name",Format: InputType.Email} as InputModel<CustomerForm>,
       {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: InputType.Date } as InputModel<CustomerForm>,
       {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: InputType.Date } as InputModel<CustomerForm>,
+      {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: InputType.DatePeriod } as InputModel<CustomerForm>,
+      {Name:x=>x.BirthDay,Title:"Birth Name",Description:"Please set birth name",Format: InputType.List,
+        Child:[
+          {Name:x=>x.BirthDay,Title:"One",Format: InputType.Text },
+          {Name:x=>x.BirthDay,Title:"Two",Format: InputType.Text },
+          {Name:x=>x.BirthDay,Title:"Three",Format: InputType.Text }
+        ] as Array<InputModel<CustomerForm>> } as InputModel<CustomerForm>,
+
 
     );
 

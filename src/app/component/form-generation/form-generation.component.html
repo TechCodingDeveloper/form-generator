@@ -54,24 +54,26 @@
         <div [innerHTML]="ShowErrors(item.FormControl)"></div>
       </div>
 
-      <div *ngIf="item.Format ==8" style="margin-top: -7%" >
-        <div class="DatePriod input-group" >
-          <div >
-            <div class="dp-hidden position-absolute">
-              <div class="input-group">
-                <input
-                  name="datepicker"
-                  class="form-control"
-                  ngbDatepicker
-                  #datepickerperiod="ngbDatepicker"
-                  [autoClose]="'outside'"
-                  (dateSelect)="onDateSelection($event,datepickerperiod)"
-                  [dayTemplate]="t"
-                  outsideDays="hidden"
-                  [startDate]="fromDate!"
-                  tabindex="-1"
-                />
-                <ng-template #t let-date let-focused="focused">
+      <div *ngIf="item.Format ==8">
+        <div class="input-group">
+          <span class="input-group-text">Date</span>
+          <div class="DatePriod">
+            <div>
+              <div class="dp-hidden position-absolute">
+                <div class="input-group">
+                  <input
+                    name="datepicker"
+                    class="form-control"
+                    ngbDatepicker
+                    #datepickerperiod="ngbDatepicker"
+                    [autoClose]="'outside'"
+                    (dateSelect)="onDateSelection($event,datepickerperiod)"
+                    [dayTemplate]="t"
+                    outsideDays="hidden"
+                    [startDate]="fromDate!"
+                    tabindex="-1"
+                  />
+                  <ng-template #t let-date let-focused="focused">
 					<span
             class="custom-day"
             [class.focused]="focused"
@@ -82,45 +84,64 @@
           >
 						{{ date.day }}
 					</span>
-                </ng-template>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="input-group">
+                <input
+                  #dpFromDate
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dpFromDate"
+                  [value]="formatter.format(fromDate)"
+                  (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+                  (click)="datepickerperiod.toggle()"
+                />
               </div>
             </div>
-            <div class="input-group">
-              <input
-                #dpFromDate
-                class="form-control"
-                placeholder="yyyy-mm-dd"
-                name="dpFromDate"
-                [value]="formatter.format(fromDate)"
-                (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
-                (click)="datepickerperiod.toggle()"
-              />
-            </div>
-          </div>
-          <div >
-            <div class="input-group">
-              <input
-                #dpToDate
-                class="form-control"
-                placeholder="yyyy-mm-dd"
-                name="dpToDate"
-                [value]="formatter.format(toDate)"
-                (input)="toDate = validateInput(toDate, dpToDate.value)"
-                (click)="datepickerperiod.toggle()"
-              />
+            <div>
+              <div class="input-group">
+                <input
+                  #dpToDate
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dpToDate"
+                  [value]="formatter.format(toDate)"
+                  (input)="toDate = validateInput(toDate, dpToDate.value)"
+                  (click)="datepickerperiod.toggle()"
+                />
+              </div>
             </div>
           </div>
         </div>
+        <span class="description" *ngIf="item.Description" [innerHTML]="item.Description">* </span>
       </div>
 
       <div class="form-group field" *ngIf="item.Format == 4">
-        <input type="text" (click)="d.toggle()" 	ngbDatepicker #d="ngbDatepicker" [formControl]="item.FormControl" class="form-control" placeholder="{{item.Title}}"
-               name="Name" />
+        <div class="input-group">
+          <span class="input-group-text">Date</span>
+          <input type="text" (click)="d.toggle()" ngbDatepicker #d="ngbDatepicker" [formControl]="item.FormControl"
+                 class="form-control" placeholder="{{item.Title}}"
+                 name="Name"/>
+        </div>
         <span class="description" *ngIf="item.Description">* {{item.Description}}</span>
         <div [innerHTML]="ShowErrors(item.FormControl)"></div>
       </div>
 
+      <div class="form-group field" *ngIf="item.Format == 7">
+         <span *ngIf="item.Child==null">List Need a Child Component</span>
+         <select class="form-control" *ngIf="item.Child">
+           <option value="" *ngFor="let child of item.Child" [ngValue]="child.Value">{{child.Title}}</option>
+         </select>
+        <span class="description" *ngIf="item.Description">* {{item.Description}}</span>
+        <div [innerHTML]="ShowErrors(item.FormControl)"></div>
+      </div>
     </div>
+
+    <div *ngIf="extentInputs.length%2==1"  class="col-md-6 col-lg-6">
+
+    </div>
+
   </form>
 
 </div>

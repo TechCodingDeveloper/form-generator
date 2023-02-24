@@ -12,7 +12,7 @@ export class InputModel<T> {
   AccessLevel: any;
   Priority?: number;
   Value?: any;
-
+  Child?:Array<InputModel<T>>
 }
 
 
