@@ -1,27 +1,61 @@
-# FormGeneration
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.4.
+# Form Generation Angular!
+**form-generation** easy way to create dynamic form with Angular .
+# Implement
+       <app-form-generation [inputs]="Inputs" [config]="Config" >  </app-form-generation>
+## pircture
 
-## Development server
+![enter image description here](https://github.com/devnozari/form-generator/blob/main/Screenshot%202023-02-25%20124654.png?raw=true)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Example
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+```bash
+ export class Customer {  
+          FirstName?: string;  
+          LastName?: string;  
+        }
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+ Inputs?:Array<InputModel<Customer>>;  
+ Config?:ConfigModel<Customer>;
+```
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+    
+```bash
+this.Inputs = new Array<InputModel<Customer>>();  
+```
+        
+```bash
+this.Inputs=[  
+      {Name:x=>x.FirstName,Title:"First Name",Description:"Please set first name",InputType: InputType.Text,Validations: [Validators.required,Validators.minLength(10)]  } as InputModel<Customer>,  
+      {Name:x=>x.LastName,Title:"Last Name",Description:"Please set last name",InputType: InputType.Text } as InputModel<Customer>,  
+     
+      {Name:x=>x.FirstName,Title:"Insert",Description:"Please set first name",InputType:InputType.Button,onClick:(item)=>{  
+          console.log("insert",item);  
+        }  
+      } as InputModel<Customer>,  
+      
+      ]; 
+```
+## Defination
 
-## Further help
+### Input Type
+| name | decription  |
+|--|--|
+| Text | create text input  |
+| Number | create Number input  |
+| PhoneNumber| create phone number input  |
+| Email| create Email  input  |
+| Date| create Date picker input  |
+| CheckBox| create CheckBox  input  |
+| Radio| create Radio input  |
+| List| create List  select element  |
+| DatePeriod| create Date picker input  |
+| Button| create Button  |
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
