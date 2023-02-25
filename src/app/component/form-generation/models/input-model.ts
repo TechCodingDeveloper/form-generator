@@ -1,5 +1,5 @@
 import {InputType} from "./format-model";
-import {AsyncValidatorFn, FormControl, FormControlOptions, ValidatorFn} from "@angular/forms";
+import {AsyncValidatorFn, FormControl, FormControlOptions, FormGroup, ValidatorFn} from "@angular/forms";
 
 
 export class InputModel<T> {
@@ -22,6 +22,8 @@ export class InputModel<T> {
 export class InputExtendModel<T> extends InputModel<T> {
   FormControlName: string = '';
   FormControl:FormControl = new FormControl();
+  FormGroup:FormGroup = new FormGroup({});
+  Childs?:Array<InputExtendModel<T>>;
 }
 
 export class  MessageContract<T> {

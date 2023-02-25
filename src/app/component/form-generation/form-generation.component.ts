@@ -13,14 +13,12 @@ import {InputType} from "./models/format-model";
 export class FormGenerationComponent<T> implements OnInit, OnChanges {
 
 
-
   ngOnChanges(changes: SimpleChanges): void {
   }
 
   //Inputs
   @Input() inputs?: Array<InputModel<T>>;
   @Input() config?: ConfigModel<T>;
-  @Input() data?: Array<T>;
 
   //Public Variable
   hoveredDate: NgbDate | null = null;
@@ -41,14 +39,15 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
   ngOnInit(): void {
     this.extentInputs = this.inputs as Array<InputExtendModel<T>>;
 
-    this.extentButton = this.extentInputs.filter(dr=>dr.InputType== InputType.Button) ;
+    this.extentButton = this.extentInputs.filter(dr => dr.InputType == InputType.Button);
 
-    this.extentInputs = this.extentInputs.filter(dr=>dr.InputType!= InputType.Button);
+    this.extentInputs = this.extentInputs.filter(dr => dr.InputType != InputType.Button);
 
     this.extentInputs?.forEach(input => {
       if (input) {
         let inputName = input.Name?.toString().split('.')[input.Name?.toString().split('.').length - 1] as string;
         input.FormControlName = inputName;
+
         let form: FormControl = new FormControl(input.Value, input.Validations);
         this.formGroup?.addControl(inputName as string, form);
         input.FormControl = form;
@@ -56,47 +55,53 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
     });
 
     this.formGroup.valueChanges.subscribe(res => {
-      debugger;
+      let message: MessageContract<T> = new MessageContract<T>();
+      message.Data = res;
+      if (this.formGroup.invalid) {
+        message.Error = new MessageErrorContract();
+        message.Error.Message = this.formGroup.status;
+      }
+      this.config?.onChange?.(message);
     });
 
   }
 
-  OnClick(item:InputExtendModel<T>) {
-    let data:T =this.formGroup.value as T;
-    let message:MessageContract<T> =new MessageContract<T>();
+  OnClick(item: InputExtendModel<T>) {
+    let data: T = this.formGroup.value as T;
+    let message: MessageContract<T> = new MessageContract<T>();
     message.Data = data;
-    if(this.formGroup.invalid) {
+    if (this.formGroup.invalid) {
       message.Error = new MessageErrorContract();
       message.Error.Message = this.formGroup.status;
     }
     item.onClick?.(message);
   }
 
-  OnLoad(item:InputExtendModel<T>) {
-    let data:T =this.formGroup.value as T;
-    let message:MessageContract<T> =new MessageContract<T>();
+  OnLoad(item: InputExtendModel<T>) {
+    let data: T = this.formGroup.value as T;
+    let message: MessageContract<T> = new MessageContract<T>();
     message.Data = data;
-    if(this.formGroup.invalid) {
+    if (this.formGroup.invalid) {
       message.Error = new MessageErrorContract();
       message.Error.Message = this.formGroup.status;
     }
     item.onLoad?.(message);
   }
 
-  showErrors(form: FormControl) : string|null {
+  showErrors(form: FormControl): string | null {
     if (form.errors && (form.dirty || form.touched)) {
-      let list:Array<string>=new Array<string>();
-      Object.keys(form.errors).forEach(key=>{
+      let list: Array<string> = new Array<string>();
+      Object.keys(form.errors).forEach(key => {
         list.push(`<span class="error-input">${key}</span>`)
       })
       return list.join(' ');
-    }else{
-      return  null;
+    } else {
+      return null;
     }
   }
 
   // Select Multi DateTime
-  onDateSelection(date: NgbDate,element:any) {
+  onDateSelection(date: NgbDate, element: any, form: InputExtendModel<T>) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
     } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
@@ -106,7 +111,10 @@ export class FormGenerationComponent<T> implements OnInit, OnChanges {
       this.toDate = null;
       this.fromDate = date;
     }
-
+    form.FormControl.setValue([
+      {year:this.fromDate?.year,month:this.fromDate?.month,day:this.fromDate?.day},
+      {year:this.toDate?.year,month:this.toDate?.month,day:this.toDate?.day}
+    ]);
   }
 
   isHovered(date: NgbDate) {
